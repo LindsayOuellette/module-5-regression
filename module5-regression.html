@@ -1,0 +1,1272 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 5: Regression — Statistics for Psychology</title>
+<style>
+:root{
+  --ink:#15202b; --ink-soft:#42536b; --ink-faint:#7b8ba3;
+  --paper:#fdfcfa; --panel:#ffffff; --line:#e2e0da;
+  --accent:#9c4221; --accent-soft:#fdf3ee; --accent-line:#e8c3ae;
+  --teal:#1b6b6b; --teal-soft:#eef7f6;
+  --gold:#8a6d1f; --gold-soft:#fbf5e3;
+  --plum:#5b3a76; --plum-soft:#f4eefa;
+  --ok:#1f6b3f; --ok-soft:#ecf6f0;
+  --no:#9b2c2c; --no-soft:#fbeeee;
+  --blue:#2c4fa8; --blue-soft:#eef2fb;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans); color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; line-height:1.6}
+#bar{position:fixed; top:0; left:0; right:0; height:52px; z-index:200;
+  background:rgba(253,252,250,.94); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px; padding:0 16px}
+#bar .brand{font-family:var(--serif); font-weight:600; font-size:15px; white-space:nowrap}
+#bar .brand small{display:block; font-family:var(--sans); font-size:10.5px; color:var(--ink-faint); letter-spacing:.08em; text-transform:uppercase; font-weight:600}
+#bar .spacer{flex:1}
+.modeswitch{display:flex; border:1px solid var(--line); border-radius:7px; overflow:hidden; background:#fff}
+.modeswitch button{font:inherit; font-size:12.5px; font-weight:600; border:0; background:transparent; padding:7px 14px; cursor:pointer; color:var(--ink-soft)}
+.modeswitch button.on{background:var(--ink); color:#fff}
+#searchwrap{position:relative}
+#search{font:inherit; font-size:13px; padding:7px 11px 7px 30px; width:190px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink)}
+#search:focus{outline:2px solid var(--accent-line); outline-offset:-1px; width:250px}
+#searchwrap::before{content:"⌕"; position:absolute; left:10px; top:5px; font-size:15px; color:var(--ink-faint)}
+#side{position:fixed; top:52px; bottom:0; left:0; width:262px; z-index:150;
+  border-right:1px solid var(--line); background:#faf8f5; overflow-y:auto; padding:16px 0 40px}
+#side h4{font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 8px; padding:0 18px; font-weight:700}
+#toc{list-style:none; margin:0; padding:0}
+#toc li a{display:block; padding:7px 18px; font-size:13.2px; color:var(--ink-soft); text-decoration:none; border-left:3px solid transparent; line-height:1.35}
+#toc li a:hover{background:#f2efe9; color:var(--ink)}
+#toc li a.active{border-left-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:600}
+#toc li a .n{color:var(--ink-faint); font-variant-numeric:tabular-nums; margin-right:7px; font-size:11.5px}
+.sidenote{margin:18px 18px 0; padding:12px 13px; background:#fff; border:1px solid var(--line); border-radius:8px; font-size:11.7px; color:var(--ink-soft); line-height:1.5}
+.sidenote b{color:var(--ink); display:block; margin-bottom:5px; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase}
+.sidenote kbd{font-family:var(--sans); font-size:10.5px; background:#f1efe9; border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:1px 5px; margin-right:2px}
+#main{margin-left:262px; padding:52px 0 0}
+.wrap{max-width:820px; margin:0 auto; padding:0 40px}
+section.sec{padding:54px 0; border-bottom:1px solid var(--line)}
+section.sec:last-child{border-bottom:0; padding-bottom:120px}
+.eyebrow{font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:10px}
+h1{font-family:var(--serif); font-size:44px; line-height:1.12; margin:0 0 16px; font-weight:600; letter-spacing:-.015em}
+h2{font-family:var(--serif); font-size:31px; line-height:1.2; margin:0 0 16px; font-weight:600; letter-spacing:-.01em}
+h3{font-size:15.5px; margin:26px 0 9px; font-weight:700}
+p{margin:0 0 14px; font-size:16px; color:var(--ink-soft)}
+.lede{font-size:18.5px; color:var(--ink); line-height:1.55}
+strong{color:var(--ink); font-weight:650}
+ul,ol{margin:0 0 14px; padding-left:22px; font-size:16px; color:var(--ink-soft)}
+li{margin-bottom:7px}
+a{color:var(--accent)}
+.key{border-left:3px solid var(--accent); background:var(--accent-soft); padding:16px 20px; margin:20px 0; border-radius:0 8px 8px 0}
+.key p{margin:0 0 10px; color:var(--ink); font-size:16.5px}
+.key p:last-child{margin:0}
+.key .lbl{font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:6px}
+.key.t{border-left-color:var(--teal); background:var(--teal-soft)} .key.t .lbl{color:var(--teal)}
+.key.p{border-left-color:var(--plum); background:var(--plum-soft)} .key.p .lbl{color:var(--plum)}
+.key.b{border-left-color:var(--blue); background:var(--blue-soft)} .key.b .lbl{color:var(--blue)}
+.narration{border:1px solid var(--line); border-radius:9px; margin:18px 0; background:#fff; overflow:hidden}
+.narration > summary{cursor:pointer; list-style:none; padding:11px 16px; font-size:12.5px; font-weight:650; color:var(--teal); background:var(--teal-soft); display:flex; align-items:center; gap:8px}
+.narration > summary::-webkit-details-marker{display:none}
+.narration > summary::before{content:"▸"; font-size:10px; transition:transform .15s}
+.narration[open] > summary::before{transform:rotate(90deg)}
+.narration > summary:hover{background:#e4f0ee}
+.narration .body{padding:14px 18px 4px; border-top:1px solid var(--line)}
+.narration .body p{font-size:15.2px; line-height:1.62}
+.narration .body p:last-child{margin-bottom:14px}
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:20px 0}
+.cols3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin:20px 0}
+.card{border:1px solid var(--line); border-radius:10px; padding:18px 19px; background:var(--panel)}
+.card h4{margin:0 0 8px; font-size:14.5px; font-weight:700}
+.card p{font-size:14.5px; margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+.card ul{font-size:14.5px; margin-bottom:0}
+.card.a{border-color:var(--accent-line); background:var(--accent-soft)}
+.card.t{border-color:#bcdad6; background:var(--teal-soft)}
+.card.g{border-color:#e0d09a; background:var(--gold-soft)}
+.card.p{border-color:#d8c6e8; background:var(--plum-soft)}
+.card.ok{border-color:#b9dcc7; background:var(--ok-soft)}
+.card.no{border-color:#ecc3c3; background:var(--no-soft)}
+.card.b{border-color:#c2cfe8; background:var(--blue-soft)}
+.demo{border:1px solid var(--line); border-radius:11px; margin:22px 0; background:var(--panel); overflow:hidden}
+.demo > header{padding:11px 17px; background:#f7f5f1; border-bottom:1px solid var(--line);
+  font-size:11px; letter-spacing:.11em; text-transform:uppercase; font-weight:700; color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:space-between; gap:10px}
+.demo > header .hint{text-transform:none; letter-spacing:0; font-weight:500; font-size:12px; color:var(--ink-faint)}
+.demo .pad{padding:20px}
+.btn{font:inherit; font-size:13.5px; font-weight:600; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:7px; padding:8px 15px; cursor:pointer}
+.btn:hover{border-color:var(--ink-faint)}
+.btn.solid{background:var(--ink); color:#fff; border-color:var(--ink)}
+.btn.solid:hover{background:var(--accent); border-color:var(--accent)}
+.btn.sm{font-size:12.5px; padding:6px 12px}
+.fb{margin-top:12px; font-size:14.2px; padding:12px 15px; border-radius:8px; display:none; line-height:1.55}
+.fb.show{display:block}
+.fb.y{background:var(--ok-soft); border:1px solid #b9dcc7; color:#1c4d33}
+.fb.n{background:var(--no-soft); border:1px solid #ecc3c3; color:#7a2626}
+.fb.neutral{background:#fbfaf7; border:1px solid var(--line); color:var(--ink-soft)}
+.opts{display:flex; gap:8px; flex-wrap:wrap}
+.opts button{font:inherit; font-size:13px; font-weight:600; border:1px solid var(--line); background:#fff; color:var(--ink-soft); border-radius:20px; padding:6px 15px; cursor:pointer; transition:all .15s}
+.opts button:hover:not(:disabled){border-color:var(--ink-faint); color:var(--ink)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok)}
+.opts button.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no)}
+.q-item{border-top:1px solid var(--line); padding:16px 0}
+.q-item:first-child{border-top:0; padding-top:0}
+.q-text{font-size:15.5px; color:var(--ink); margin:0 0 11px}
+.q-text .num{color:var(--ink-faint); font-variant-numeric:tabular-nums; margin-right:8px; font-size:13px}
+table.tbl{width:100%; border-collapse:collapse; font-size:14.5px; margin:16px 0}
+table.tbl th{text-align:left; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); padding:0 12px 8px; border-bottom:1px solid var(--line); font-weight:700}
+table.tbl td{padding:11px 12px; border-bottom:1px solid var(--line); color:var(--ink-soft); vertical-align:top}
+table.tbl td.k{color:var(--ink); font-weight:650; width:150px}
+table.tbl tr:hover td{background:#faf8f5}
+.eq-box{font-family:var(--serif); font-size:28px; padding:22px 28px; background:var(--accent-soft); border:1px solid var(--accent-line); border-radius:10px; text-align:center; letter-spacing:.02em; color:var(--ink); margin:20px 0}
+.apa{background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px 22px; font-size:15.2px; line-height:1.7; margin:16px 0}
+.apa b{color:var(--accent)}
+textarea{font:inherit; font-size:15px; width:100%; min-height:100px; border:1px solid var(--line); border-radius:8px; padding:14px; background:#fff; color:var(--ink); resize:vertical}
+textarea:focus{border-color:var(--accent); outline:2px solid var(--accent-line); outline-offset:-1px}
+pre.r-output{background:#1e1e2e;color:#cdd6f4;font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;font-size:12.5px;line-height:1.55;padding:20px 22px;border-radius:10px;overflow-x:auto;margin:16px 0;white-space:pre;tab-size:4}
+pre.r-output .r-comment{color:#6c7086}
+pre.r-output .r-signif{color:#f9e2af}
+pre.r-output .r-stars{color:#f9e2af;font-weight:700}
+pre.r-output .r-call{color:#89b4fa}
+pre.r-output .r-num{color:#a6e3a1}
+pre.r-output [data-hl]{cursor:pointer;border-radius:3px;transition:background .2s,outline .2s}
+pre.r-output [data-hl]:hover{outline:1px dashed rgba(255,255,255,.35)}
+pre.r-output [data-hl].lit{background:rgba(249,226,175,.25);outline:2px solid #f9e2af}
+.hl-btns{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0}
+.hl-btns button{font:inherit;font-size:12.5px;font-weight:600;border:2px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:20px;padding:6px 14px;cursor:pointer;transition:all .15s}
+.hl-btns button:hover{border-color:var(--ink-faint);color:var(--ink)}
+.hl-btns button.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.interp-card{margin-top:14px;padding:18px 20px;border-radius:10px;border:2px solid var(--accent-line);background:var(--accent-soft);display:none;animation:fade .25s ease}
+.interp-card.show{display:block}
+.interp-card h4{margin:0 0 6px;font-size:14.5px;font-weight:700;color:var(--accent)}
+.interp-card p{margin:0;font-size:15.5px;color:var(--ink)}
+.interp-card .val{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--accent);display:block;margin-bottom:4px}
+body.present pre.r-output{font-size:14.5px;padding:24px 28px}
+body.present .hl-btns button{font-size:15px;padding:8px 18px}
+body.present .interp-card p{font-size:19px}
+body.present .interp-card .val{font-size:26px}
+mark{background:#fdf0b8; color:var(--ink); padding:0 2px; border-radius:2px}
+.dimmed{opacity:.25}
+.r2sim{cursor:crosshair; border:1px solid var(--line); border-radius:10px; background:#fff; touch-action:none; width:100%; height:320px}
+.stat-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:10px}
+.stat-val{font-family:var(--serif); font-size:18px; font-weight:600; color:var(--accent)}
+body.present #side{transform:translateX(-100%)}
+body.present #main{margin-left:0}
+body.present .wrap{max-width:1120px; padding:0 60px}
+body.present section.sec{display:none; border:0; min-height:calc(100vh - 52px); padding:44px 0 96px}
+body.present section.sec.live{display:block; animation:fade .32s ease}
+@keyframes fade{from{opacity:0; transform:translateY(9px)}to{opacity:1; transform:none}}
+body.present h1{font-size:58px}
+body.present h2{font-size:44px; margin-bottom:22px}
+body.present h3{font-size:20px; margin-top:30px}
+body.present p{font-size:21px; line-height:1.55}
+body.present .lede{font-size:25px}
+body.present ul,body.present ol{font-size:21px}
+body.present li{margin-bottom:11px}
+body.present .key p{font-size:23px}
+body.present .card p,body.present .card ul{font-size:17.5px}
+body.present .card h4{font-size:17.5px}
+body.present .q-text{font-size:20px}
+body.present .opts button{font-size:16px; padding:9px 20px}
+body.present .fb{font-size:17px}
+body.present table.tbl td{font-size:17.5px}
+body.present .narration{display:none}
+body.present.notes .narration{display:block}
+#pnav{display:none; position:fixed; bottom:0; left:0; right:0; height:44px; z-index:180;
+  background:rgba(253,252,250,.95); backdrop-filter:blur(10px); border-top:1px solid var(--line);
+  align-items:center; justify-content:center; gap:16px; font-size:12.5px; color:var(--ink-faint)}
+body.present #pnav{display:flex}
+#pnav button{font:inherit; font-size:16px; line-height:1; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px; padding:5px 13px; cursor:pointer}
+#pnav button:hover{background:var(--ink); color:#fff; border-color:var(--ink)}
+#pnav .lbl{font-weight:600; color:var(--ink-soft); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+#pnav .ct{font-variant-numeric:tabular-nums}
+#prog{position:fixed; top:52px; left:0; height:2px; background:var(--accent); z-index:190; width:0; transition:width .3s; display:none}
+body.present #prog{display:block}
+@media (max-width:1000px){
+  #side{transform:translateX(-100%)} #main{margin-left:0}
+  .cols,.cols3{grid-template-columns:1fr}
+  .wrap{padding:0 22px} h1{font-size:33px} h2{font-size:26px}
+}
+@media print{#bar,#side,#pnav,#prog{display:none} #main{margin:0} section.sec{break-after:page} .narration{break-inside:avoid}}
+</style>
+</head><body>
+
+<div id="bar">
+  <div class="brand">Module 5 · Regression<small>Statistics for Psychology · Prof. Ouellette</small></div>
+  <div class="spacer"></div>
+  <div id="searchwrap"><input id="search" type="search" placeholder="Search this module…" autocomplete="off"></div>
+  <div class="modeswitch"><button id="mStudy" class="on">Study</button><button id="mPresent">Present</button></div>
+</div>
+
+<nav id="side">
+  <h4>Module 5</h4>
+  <ul id="toc"></ul>
+  <div class="sidenote">
+    <b>Keyboard shortcuts</b>
+    <kbd>←</kbd><kbd>→</kbd> Navigate in present mode<br>
+    <kbd>Esc</kbd> Return to study mode<br>
+    <kbd>F</kbd> Toggle fullscreen
+  </div>
+</nav>
+
+<div id="main"><div class="wrap">
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 1. WELCOME -->
+<section class="sec" data-title="Regression">
+  <div class="eyebrow">Module 5</div>
+  <h1>Regression</h1>
+  <p class="lede">This week we're building on correlation. A lot will feel similar — but with one big difference.</p>
+
+  <div class="key">
+    <div class="lbl">The difference</div>
+    <p><strong>Correlation</strong> measures the strength of a relationship. <strong>Regression</strong> measures causation — a change in X <em>causes</em> a change in Y.</p>
+  </div>
+
+  <div class="key t">
+    <div class="lbl">In one sentence</div>
+    <p>Regression lets us <strong>predict</strong> the value of one variable based on another.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 2. CORRELATION RECAP -->
+<section class="sec" data-title="Correlation recap">
+  <div class="eyebrow">Quick recap</div>
+  <h2>Correlation: how strong is the relationship?</h2>
+  <p>Last week we measured how closely two variables are related using <strong>r</strong>, the correlation coefficient. Remember the range:</p>
+
+  <svg viewBox="0 0 640 90" aria-label="Correlation coefficient range from negative 1 to positive 1" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0">
+    <line x1="40" y1="40" x2="600" y2="40" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="40" cy="40" r="7" fill="var(--no)"/><circle cx="320" cy="40" r="7" fill="var(--ink-faint)"/><circle cx="600" cy="40" r="7" fill="var(--ok)"/>
+    <text x="40" y="72" text-anchor="middle" style="font-weight:700;fill:var(--no);font-family:var(--sans);font-size:14px">r = −1</text>
+    <text x="320" y="72" text-anchor="middle" style="font-weight:700;fill:var(--ink-faint);font-family:var(--sans);font-size:14px">r = 0</text>
+    <text x="600" y="72" text-anchor="middle" style="font-weight:700;fill:var(--ok);font-family:var(--sans);font-size:14px">r = +1</text>
+    <text x="40" y="18" text-anchor="middle" style="font-size:11px;font-family:var(--sans);fill:var(--ink-faint)">Negative</text>
+    <text x="320" y="18" text-anchor="middle" style="font-size:11px;font-family:var(--sans);fill:var(--ink-faint)">No relationship</text>
+    <text x="600" y="18" text-anchor="middle" style="font-size:11px;font-family:var(--sans);fill:var(--ink-faint)">Positive</text>
+  </svg>
+
+  <svg id="corrPlots" viewBox="0 0 660 200" aria-label="Three scatterplots showing positive, negative, and no correlation" style="display:block;width:100%;max-width:660px;height:auto;margin:14px 0"></svg>
+
+  <div class="key">
+    <p>The closer the dots are to forming a line, the stronger the correlation. But remember: <strong>correlation does not mean causation.</strong></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 3. CORRELATION ≠ CAUSATION -->
+<section class="sec" data-title="Correlation ≠ Causation">
+  <div class="eyebrow">Key distinction</div>
+  <h2>Correlation ≠ Causation</h2>
+  <p>Just because two variables are related doesn't mean one causes the other.</p>
+
+  <div class="cols">
+    <div class="card">
+      <h4>Example</h4>
+      <p>Wearing shorts and ice cream sales are highly correlated.</p>
+      <p>But wearing shorts doesn't <em>cause</em> you to buy ice cream. And buying ice cream doesn't <em>cause</em> you to wear shorts.</p>
+      <p style="color:var(--ink-faint)">A third variable — warm weather — is behind both.</p>
+    </div>
+    <div class="card">
+      <h4>Correlation says:</h4>
+      <p>"These two things tend to go together."</p>
+      <p>We're just <strong>describing</strong> how related they are.</p>
+      <p style="color:var(--ink-faint)">If you change one variable, it does not necessarily mean a change in the other.</p>
+    </div>
+  </div>
+
+  <div class="key t">
+    <div class="lbl">Where regression comes in</div>
+    <p>This is where regression comes in. Regression lets us talk about <strong>causation</strong> — a change in X <em>will cause</em> a change in Y.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 4. REGRESSION = PREDICTION -->
+<section class="sec" data-title="Regression = Prediction">
+  <div class="eyebrow">The big idea</div>
+  <h2>Regression = Prediction</h2>
+  <p>In regression, we work with <strong>independent</strong> and <strong>dependent</strong> variables — and we're saying that a change in the IV causes a change in the DV.</p>
+
+  <div class="cols">
+    <div class="card b">
+      <h4>Independent variable (IV)</h4>
+      <p>Always on the <strong>X axis</strong></p>
+      <p style="color:var(--ink-faint)">The predictor — the thing we think causes the change</p>
+    </div>
+    <div class="card ok">
+      <h4>Dependent variable (DV)</h4>
+      <p>Always on the <strong>Y axis</strong></p>
+      <p style="color:var(--ink-faint)">The outcome — the thing that changes as a result</p>
+    </div>
+  </div>
+
+  <div class="key p">
+    <div class="lbl">Think of it this way</div>
+    <p>Think of it like a fortune teller: if I know your value of X, I can <strong>predict</strong> your value of Y.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 5. SLOPE -->
+<section class="sec" data-title="Slope: the rate of change">
+  <div class="eyebrow">Building blocks</div>
+  <h2>Slope: the rate of change</h2>
+  <p>The regression line shows us the <strong>rate of change</strong>. You might remember "rise over run" from algebra — same idea.</p>
+
+  <svg viewBox="0 0 640 300" id="slopeSvg" aria-label="Diagram showing slope as rise over run on a regression line" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0"></svg>
+
+  <div class="key">
+    <div class="lbl">The slope tells us</div>
+    <p>When X increases by <strong>one unit</strong>, Y changes by the slope amount.</p>
+    <p style="color:var(--ink-soft);font-size:14.5px">Δ (delta) = rate of change. Slope = ΔY / ΔX</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 6. SES EXAMPLE -->
+<section class="sec" data-title="Example: SES → test scores">
+  <div class="eyebrow">Real example</div>
+  <h2>Parental SES → Student test scores</h2>
+  <p>Let's say our <strong>IV</strong> is parental socioeconomic status and our <strong>DV</strong> is student test scores. The slope (rate of change) is <strong>5 test points</strong>.</p>
+
+  <svg viewBox="0 0 640 320" id="sesSvg" aria-label="Graph of parental SES predicting student test scores with slope of 5" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0"></svg>
+
+  <div class="key t">
+    <div class="lbl">Interpretation</div>
+    <p>As parental SES increases by one unit, student test scores increase by <strong>5 points</strong>.</p>
+  </div>
+  <p>Because this is a positive slope, we know it's a <strong>positive relationship</strong>: as X goes up, Y goes up.</p>
+
+  <details class="narration">
+    <summary>Instructor note</summary>
+    <div class="body">
+      <p>This is just like correlation — a positive slope means a positive direction, a negative slope means negative. The difference is we're now saying one <em>causes</em> the other.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 7. COMPARING TWO STUDENTS -->
+<section class="sec" data-title="Comparing two students">
+  <div class="eyebrow">Another way to think about it</div>
+  <h2>Comparing two students</h2>
+
+  <svg viewBox="0 0 640 280" id="compareSvg" aria-label="Graph comparing two students whose parents differ in SES by $5,000" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0"></svg>
+
+  <div class="key">
+    <div class="lbl">Interpretation</div>
+    <p>If we compare two students whose parents differ in SES by <strong>$5,000</strong>, the student whose parent makes $5,000 more will have higher test scores by <strong>5 points</strong>.</p>
+  </div>
+  <p>Student A's parents make $10,000. Student B's parents make $15,000. That's a $5,000 difference → 5-point difference in test scores.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 8. INTERCEPT -->
+<section class="sec" data-title="The intercept">
+  <div class="eyebrow">Building blocks</div>
+  <h2>The intercept</h2>
+  <p>The intercept is the predicted value of Y when X equals zero — the starting point of the regression line.</p>
+
+  <svg viewBox="0 0 640 320" id="interceptSvg" aria-label="Graph showing the intercept where the regression line crosses the Y axis" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0"></svg>
+
+  <div class="key">
+    <div class="lbl">In our example</div>
+    <p>When parental SES is <strong>zero</strong> (parents make no money), student test scores are predicted to be <strong>10 points</strong>.</p>
+  </div>
+
+  <div class="key b">
+    <p>Good news: when we interpret and write up regression results, we don't really talk about the intercept. But you should know what it is.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 9. REGRESSION TO THE MEAN -->
+<section class="sec" data-title="Regression to the mean">
+  <div class="eyebrow">Where the name comes from</div>
+  <h2>Regression to the mean</h2>
+  <p>The word "regress" means <em>to return to a former or less developed state</em>. Francis Galton, who invented regression, called it "regression to mediocrity."</p>
+
+  <div class="cols">
+    <div class="card">
+      <h4>The pattern</h4>
+      <p>Extreme values tend to move <strong>back toward the average</strong> over time.</p>
+      <p>The top always comes down. The bottom always comes up.</p>
+    </div>
+    <div class="card">
+      <h4>Examples</h4>
+      <p><strong>Baseball:</strong> The rookie of the year almost always does worse in their second year.</p>
+      <p><strong>Schools:</strong> The bottom-performing school almost always does better the next year.</p>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 640 190" id="regMeanSvg" aria-label="Visualization showing extreme values regressing toward the mean" style="display:block;width:100%;max-width:640px;height:auto;margin:14px 0"></svg>
+
+  <div class="key p">
+    <p>The regression line is essentially the prediction line — predicting that things will trend back toward the middle.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 10. THE EQUATION -->
+<section class="sec" data-title="The regression equation">
+  <div class="eyebrow">The math</div>
+  <h2>The regression equation</h2>
+  <p>You don't need to do calculations, but you should recognize the equation and know what each piece means.</p>
+
+  <div class="eq-box">Y = b₀ + b₁X₁</div>
+
+  <div class="cols">
+    <div class="card a">
+      <h4>Y</h4>
+      <p>The predicted value of the dependent variable</p>
+    </div>
+    <div class="card g">
+      <h4>b₀ (beta zero)</h4>
+      <p>The <strong>intercept</strong> — the predicted Y when X = 0</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card b">
+      <h4>b₁ (beta one)</h4>
+      <p>The <strong>slope</strong> — the rate of change</p>
+    </div>
+    <div class="card t">
+      <h4>X₁</h4>
+      <p>The value of the <strong>independent variable</strong> for a given case</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <p>The "b" values are often called <strong>beta</strong> (β). You'll see both lowercase β (standardized) and uppercase B (unstandardized) in output. Same idea — just different scales.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 11. REGRESSION LINE + RESIDUALS (interactive) -->
+<section class="sec" data-title="The regression line">
+  <div class="eyebrow">Putting it together</div>
+  <h2>The regression line = the prediction line</h2>
+  <p>The regression line is drawn through all the data points to make the <strong>best predictions</strong>. The distance between each dot and the line is the <strong>residual</strong> (error) — how far off the prediction was.</p>
+
+  <div class="demo">
+    <header>Interactive: Residuals Explorer<span class="hint">Drag dots toward or away from the line</span></header>
+    <div class="pad">
+      <canvas id="residCanvas" style="width:100%;height:320px;cursor:grab;border:1px solid var(--line);border-radius:10px;background:#fff;touch-action:none"></canvas>
+      <div class="stat-row">
+        <span class="stat-val" id="residStat">Average residual: —</span>
+        <button class="btn sm" id="residScatter">Scatter points</button>
+        <button class="btn sm" id="residTight">Tighten points</button>
+        <button class="btn sm" id="residReset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols" style="margin-top:16px">
+    <div class="card ok">
+      <h4>Points close to the line</h4>
+      <p>Small residuals → good predictions → <strong>strong effect</strong> of IV on DV</p>
+    </div>
+    <div class="card no">
+      <h4>Points far from the line</h4>
+      <p>Large residuals → poor predictions → <strong>weak effect</strong> of IV on DV</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <p>The regression line minimizes the total squared residuals — it's the line that makes the <strong>least total error</strong> across all data points.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 12. R-SQUARED -->
+<section class="sec" data-title="Variance: R²">
+  <div class="eyebrow">Effect size</div>
+  <h2>Variance in regression: R²</h2>
+  <p>In regression, we use <strong>R²</strong> (R-squared) to describe the <strong>effect size</strong> — how useful is our predictor?</p>
+
+  <div class="cols">
+    <div class="card">
+      <h4>What R² tells us</h4>
+      <p>The percentage of variance in the DV that is explained by the IV.</p>
+      <p style="color:var(--ink-faint)">Example: R² = 0.40 means the IV explains 40% of the changes in the DV.</p>
+    </div>
+    <div class="card">
+      <h4>Benchmarks</h4>
+      <p><strong>.01 – .09</strong> → Small effect</p>
+      <p><strong>.09 – .25</strong> → Medium effect</p>
+      <p><strong>.25+</strong> → Large effect</p>
+      <p style="color:var(--ink-faint)">Similar to correlation coefficient benchmarks.</p>
+    </div>
+  </div>
+
+  <div class="key t">
+    <div class="lbl">How to say it</div>
+    <p>"The IV accounts for <strong>[R² × 100]%</strong> of the variance in the DV."</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 13. INTERACTIVE R² SIM -->
+<section class="sec" data-title="Interactive: R² simulator">
+  <div class="eyebrow">Try it yourself</div>
+  <h2>Build your own R²</h2>
+  <p>Click anywhere on the plot to add data points. Watch how R² changes as you add points closer to — or farther from — the regression line.</p>
+
+  <div class="demo">
+    <header>Interactive R² Simulator<span class="hint">Click to add points</span></header>
+    <div class="pad">
+      <canvas id="r2canvas" class="r2sim" width="640" height="320"></canvas>
+      <div class="stat-row">
+        <span class="stat-val" id="r2stat">Points: 0 · R² = —</span>
+        <button class="btn sm" id="r2reset">Reset</button>
+        <button class="btn sm" id="r2toggle" disabled>Show residual lines</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="key">
+    <p>When points are close to the line, R² is high (strong effect). When points are scattered, R² is low (weak effect). An outlier far from the line can drag R² down significantly.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 14. READING & INTERPRETING OUTPUT -->
+<section class="sec" data-title="Reading regression output">
+  <div class="eyebrow">Lab section</div>
+  <h2>Reading regression output</h2>
+  <p>Here's real output from a regression in R: <strong>Does years since PhD predict professor salary?</strong></p>
+  <p style="color:var(--ink-faint);font-size:13.5px">Click the buttons below the output to highlight each key value and see what it means.</p>
+
+  <pre class="r-output" id="rout"><span class="r-call">Call:</span>
+lm(formula = salary ~ yrs.since.phd, data = Salaries)
+
+<span class="r-comment">Residuals:</span>
+   Min      1Q  Median      3Q     Max
+-69436  -23422   -4209   17674  107073
+
+<span class="r-comment">Coefficients:</span>
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  <span data-hl="intercept" class="r-num">91718.7</span>     2765.8   33.16   <span data-hl="pval">&lt;.001</span> <span data-hl="stars" class="r-stars">***</span>
+yrs.since.phd  <span data-hl="slope" class="r-num">985.3</span>      107.4    9.18   <span data-hl="pval">&lt;.001</span> <span data-hl="stars" class="r-stars">***</span>
+<span data-hl="stars" class="r-signif">---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+
+Residual standard error: 27530 on <span data-hl="df">395</span> degrees of freedom
+Multiple R-squared:  <span data-hl="r2" class="r-num">0.1758</span>,	Adjusted R-squared:  0.1737
+F-statistic: <span data-hl="fstat" class="r-num">84.23</span> on <span data-hl="df">1 and 395 DF</span>,  p-value: <span data-hl="pval" class="r-num">&lt;.001</span></pre>
+
+  <div class="hl-btns" id="hlBtns">
+    <button data-target="slope">Slope (β₁)</button>
+    <button data-target="intercept">Intercept (β₀)</button>
+    <button data-target="r2">R²</button>
+    <button data-target="fstat">F-statistic</button>
+    <button data-target="pval">p-value</button>
+    <button data-target="stars">Significance stars</button>
+    <button data-target="df">Degrees of freedom</button>
+  </div>
+
+  <div class="interp-card" id="interpCard"></div>
+
+  <div class="key" style="margin-top:22px">
+    <div class="lbl">The bottom line</div>
+    <p>You only need a few numbers from this wall of text: the <strong>slope</strong>, the <strong>R²</strong>, the <strong>F-statistic</strong> with its <strong>degrees of freedom</strong>, and the <strong>p-value</strong>. Those go into your APA write-up.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 16. APA REPORTING -->
+<section class="sec" data-title="APA reporting">
+  <div class="eyebrow">Writing it up</div>
+  <h2>APA reporting for regression</h2>
+
+  <div class="key b">
+    <div class="lbl">Values to report</div>
+    <p>R², F value, degrees of freedom (numerator, denominator), p value, and β for each predictor.</p>
+  </div>
+
+  <h3>Example write-up</h3>
+  <div class="apa">
+    <p>A simple linear regression was used to test if years since PhD significantly predicted professor salary. The results indicated that years since PhD explained <b>17.6%</b> of the variance in salary (<b>R² = .18</b>, <b>F</b>(1, 395) = <b>84.23</b>, <b>p</b> &lt; .001). Years since PhD significantly predicted salary (<b>β = 985</b>, <b>p</b> &lt; .001).</p>
+  </div>
+
+  <div class="key">
+    <p>Notice the pattern: name the test → report R² and what it means → report F with degrees of freedom and p → report β for the predictor with its p.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 17. PRACTICE: SLOPE -->
+<section class="sec" data-title="Practice: interpret the slope">
+  <div class="eyebrow">Practice</div>
+  <h2>Interpret the slope</h2>
+  <p>A researcher finds that <strong>hours of sleep</strong> (IV) predicts <strong>exam score</strong> (DV). The slope is <strong>3.2</strong>. Which interpretation is correct?</p>
+
+  <div class="demo">
+    <header>Quiz<span class="hint">Pick the best answer</span></header>
+    <div class="pad">
+      <div class="q-item">
+        <div class="opts" id="q1opts">
+          <button data-why="This reverses the direction — it describes exam score predicting sleep, not the other way around.">For every 1-point increase in exam score, hours of sleep increases by 3.2</button>
+          <button data-ok="1" data-why="Correct! The slope tells us: for every 1-unit increase in the IV (sleep), the DV (exam score) changes by the slope amount (3.2 points).">For every 1-hour increase in sleep, exam score increases by 3.2 points</button>
+          <button data-why="This sounds like a correlation statement. Regression is about prediction and causation, not just 'relationship.'">Hours of sleep and exam scores have a relationship of 3.2</button>
+          <button data-why="R² tells us about explained variance, not the slope. The slope is the rate of change per unit.">Hours of sleep explains 3.2% of the variance in exam scores</button>
+        </div>
+        <div class="fb" id="q1fb"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 18. PRACTICE: R² -->
+<section class="sec" data-title="Practice: interpret R²">
+  <div class="eyebrow">Practice</div>
+  <h2>Interpret the R²</h2>
+  <p>The same study finds <strong>R² = .45</strong>. What does that mean?</p>
+
+  <div class="demo">
+    <header>Quiz<span class="hint">Pick the best answer</span></header>
+    <div class="pad">
+      <div class="q-item">
+        <div class="opts" id="q2opts">
+          <button data-why="R² tells us about variance explained, not about correlation strength directly.">Sleep and exam scores have a correlation of .45</button>
+          <button data-ok="1" data-why="Yes! R² = .45 means 45% of the differences in exam scores can be explained by hours of sleep. That's a large effect.">Hours of sleep accounts for 45% of the variance in exam scores</button>
+          <button data-why="Close, but inverted! The IV (sleep) explains variance in the DV (exam scores), not the other way around.">Exam scores explain 45% of the variance in hours of sleep</button>
+          <button data-why="R² is never interpreted as a probability of the result being correct. It's about explained variance.">There is a 45% chance this result is correct</button>
+        </div>
+        <div class="fb" id="q2fb"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 19. APA WRITING PRACTICE -->
+<section class="sec" data-title="Practice: APA write-up">
+  <div class="eyebrow">Practice</div>
+  <h2>Write the APA sentence</h2>
+  <p>Using the R output below, write an APA-style results sentence in the box.</p>
+
+  <pre class="r-output"><span class="r-call">Call:</span>
+lm(formula = exam_score ~ hours_of_sleep, data = sleep_study)
+
+<span class="r-comment">Coefficients:</span>
+               Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)     <span class="r-num">52.10</span>      5.83    8.94   <span class="r-num">&lt;.001</span> <span class="r-stars">***</span>
+hours_of_sleep   <span class="r-num">3.20</span>      0.40    7.97   <span class="r-num">&lt;.01</span>  <span class="r-stars">**</span>
+<span class="r-signif">---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+
+Multiple R-squared:  <span class="r-num">0.45</span>,	Adjusted R-squared:  0.4429
+F-statistic: <span class="r-num">63.5</span> on 1 and 78 DF,  p-value: <span class="r-num">&lt;.001</span></pre>
+
+  <textarea id="apaInput" placeholder="A simple linear regression was used to test if..."></textarea>
+  <div style="margin-top:10px">
+    <button class="btn solid" id="apaReveal">Show example answer</button>
+  </div>
+
+  <div class="apa" id="apaAnswer" style="display:none; margin-top:16px">
+    <p>A simple linear regression was used to test if hours of sleep significantly predicted exam scores. The results indicated that hours of sleep explained <b>45%</b> of the variance in exam scores (<b>R² = .45</b>, <b>F</b>(1, 78) = <b>63.5</b>, <b>p</b> &lt; .001). Hours of sleep significantly predicted exam scores (<b>β = 3.2</b>, <b>p</b> &lt; .01).</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- 20. RECAP -->
+<section class="sec" data-title="Module recap">
+  <div class="eyebrow">Recap</div>
+  <h2>Module 5: what to remember</h2>
+
+  <div class="cols">
+    <div class="card a">
+      <h4>1. Regression ≠ correlation</h4>
+      <p>Correlation describes relationships. Regression describes <strong>causation and prediction</strong>: a change in the IV causes a change in the DV.</p>
+    </div>
+    <div class="card t">
+      <h4>2. The slope</h4>
+      <p>For every 1-unit increase in X, Y changes by the slope. It's the <strong>rate of change</strong>.</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card g">
+      <h4>3. The intercept</h4>
+      <p>The predicted value of Y when X = 0. You usually don't need to interpret it.</p>
+    </div>
+    <div class="card b">
+      <h4>4. R² = effect size</h4>
+      <p>The percentage of variance in the DV explained by the IV. Higher = stronger effect.</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="card p">
+      <h4>5. The equation</h4>
+      <div class="eq-box" style="font-size:22px;padding:14px 20px;margin:8px 0 0">Y = b₀ + b₁X₁</div>
+    </div>
+    <div class="card ok">
+      <h4>6. APA format</h4>
+      <p>Report R², F(df₁, df₂), p, and β for each predictor.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <p>For your final paper: if you have two variables, a <strong>correlation or regression</strong> will likely be the easiest option.</p>
+  </div>
+</section>
+
+</div></div><!-- /main /wrap -->
+
+<div id="pnav">
+  <button id="pPrev">←</button>
+  <span class="lbl" id="pLabel"></span>
+  <span class="ct"><span id="pNow">1</span> / <span id="pTot">1</span></span>
+  <button id="pNext">→</button>
+</div>
+<div id="prog"></div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+
+/* ─── TOC + Navigation ─── */
+var secs=$$('section.sec'), idx=0;
+var toc=$('#toc');
+secs.forEach(function(s,i){
+  s.id='s'+i;
+  var li=document.createElement('li'), a=document.createElement('a');
+  a.href='#s'+i;
+  a.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span>'+s.dataset.title;
+  a.addEventListener('click',function(e){ if(document.body.classList.contains('present')){e.preventDefault(); go(i);} });
+  li.appendChild(a); toc.appendChild(li);
+});
+var tocLinks=$$('#toc a');
+function markToc(i){tocLinks.forEach(function(a,j){a.classList.toggle('active',j===i)})}
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    if(document.body.classList.contains('present'))return;
+    es.forEach(function(e){ if(e.isIntersecting) markToc(secs.indexOf(e.target)); });
+  },{rootMargin:'-60px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+}
+function go(i){
+  idx=Math.max(0,Math.min(secs.length-1,i));
+  secs.forEach(function(s,j){s.classList.toggle('live',j===idx)});
+  markToc(idx);
+  $('#pLabel').textContent=secs[idx].dataset.title;
+  $('#pNow').textContent=idx+1;
+  $('#prog').style.width=((idx+1)/secs.length*100)+'%';
+  window.scrollTo(0,0);
+  /* re-draw canvas if on R² slide */
+  var cv=$('#r2canvas');
+  if(cv && secs[idx].contains(cv) && typeof window._r2resize==='function') window._r2resize();
+}
+function setMode(p){
+  document.body.classList.toggle('present',p);
+  $('#mPresent').classList.toggle('on',p);
+  $('#mStudy').classList.toggle('on',!p);
+  if(p){ $('#pTot').textContent=secs.length; go(idx); }
+  else{ secs.forEach(function(s){s.classList.remove('live')}); if(secs[idx]&&secs[idx].scrollIntoView)secs[idx].scrollIntoView(); }
+}
+$('#mPresent').addEventListener('click',function(){setMode(true)});
+$('#mStudy').addEventListener('click',function(){setMode(false)});
+$('#pNext').addEventListener('click',function(){go(idx+1)});
+$('#pPrev').addEventListener('click',function(){go(idx-1)});
+document.addEventListener('keydown',function(e){
+  var t=e.target.tagName;
+  if(t==='INPUT'||t==='TEXTAREA'||e.target.isContentEditable)return;
+  var p=document.body.classList.contains('present');
+  if(p&&(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')){e.preventDefault();go(idx+1)}
+  else if(p&&(e.key==='ArrowLeft'||e.key==='PageUp')){e.preventDefault();go(idx-1)}
+  else if(e.key==='Escape'&&p){setMode(false)}
+  else if(e.key==='f'||e.key==='F'){
+    if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+    else{document.exitFullscreen&&document.exitFullscreen()}
+  }
+});
+
+/* ─── Search ─── */
+var sIn=$('#search');
+function clearMarks(){
+  $$('mark').forEach(function(m){var p=m.parentNode; p.replaceChild(document.createTextNode(m.textContent),m); p.normalize();});
+  secs.forEach(function(s){s.classList.remove('dimmed')});
+  tocLinks.forEach(function(a){a.parentNode.style.display=''});
+}
+function hilite(node,re){
+  if(node.nodeType===3){
+    if(node.data.match(re)){
+      var sp=document.createElement('span');
+      sp.innerHTML=node.data.replace(re,'<mark>$&</mark>');
+      node.parentNode.replaceChild(sp,node);
+    }
+  } else if(node.nodeType===1&&!/^(SCRIPT|STYLE|MARK|INPUT|SVG|AUDIO|CANVAS|TEXTAREA)$/i.test(node.tagName)){
+    Array.prototype.slice.call(node.childNodes).forEach(function(c){hilite(c,re)});
+  }
+}
+sIn.addEventListener('input',function(){
+  clearMarks();
+  var q=this.value.trim(); if(q.length<2)return;
+  var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+  secs.forEach(function(s,i){
+    var hit=re.test(s.textContent); re.lastIndex=0;
+    if(hit){ hilite(s,re); } else { s.classList.add('dimmed'); tocLinks[i].parentNode.style.display='none'; }
+  });
+});
+
+/* ─── Helpers ─── */
+function rnorm(){var u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+/* ═══ SVG: Correlation scatterplots ═══ */
+(function(){
+  var s=$('#corrPlots'); if(!s) return;
+  var sets=[
+    {label:"Positive",pts:Array.from({length:12},function(_,i){return{x:0.5+i*0.4,y:6+i*4.5+rnorm()*3}})},
+    {label:"Negative",pts:Array.from({length:12},function(_,i){return{x:0.5+i*0.4,y:64-i*4.5+rnorm()*3}})},
+    {label:"None",pts:Array.from({length:20},function(){return{x:0.3+Math.random()*4.5,y:5+Math.random()*55}})}
+  ];
+  sets.forEach(function(d,gi){
+    var ox=gi*220+10, oy=10, w=200, h=150;
+    el("rect",{x:ox,y:oy,width:w,height:h,fill:"none",stroke:"var(--line)","stroke-width":1},s);
+    el("text",{x:ox+w/2,y:oy+h+18,"text-anchor":"middle",style:"font-size:12px;font-weight:700;font-family:var(--sans);fill:var(--ink-soft)"},s,d.label);
+    d.pts.forEach(function(p){
+      var px=ox+10+(p.x/5)*(w-20), py=oy+h-10-(p.y/70)*(h-20);
+      el("circle",{cx:Math.max(ox+4,Math.min(ox+w-4,px)),cy:Math.max(oy+4,Math.min(oy+h-4,py)),r:4,fill:"var(--accent)",opacity:.65},s);
+    });
+  });
+})();
+
+/* ═══ SVG: Slope diagram ═══ */
+(function(){
+  var s=$('#slopeSvg'); if(!s) return;
+  el("line",{x1:80,y1:260,x2:600,y2:260,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:80,y1:260,x2:80,y2:30,stroke:"var(--ink)","stroke-width":2},s);
+  el("text",{x:340,y:295,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:14px;font-family:var(--sans)"},s,"X (Independent Variable)");
+  el("text",{x:25,y:150,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:14px;font-family:var(--sans)",transform:"rotate(-90,25,150)"},s,"Y (Dependent Variable)");
+  el("line",{x1:100,y1:230,x2:560,y2:70,stroke:"var(--ink)","stroke-width":3},s);
+  var bx=260,by=174,ex=400,ey=174-(400-260)*(160/460);
+  el("line",{x1:bx,y1:by,x2:ex,y2:by,stroke:"var(--accent)","stroke-width":2,"stroke-dasharray":"6 4"},s);
+  el("line",{x1:ex,y1:by,x2:ex,y2:ey,stroke:"var(--accent)","stroke-width":2,"stroke-dasharray":"6 4"},s);
+  el("circle",{cx:bx,cy:by,r:5,fill:"var(--accent)"},s);
+  el("circle",{cx:ex,cy:ey,r:5,fill:"var(--accent)"},s);
+  el("text",{x:(bx+ex)/2,y:by+20,"text-anchor":"middle",style:"font-weight:700;fill:var(--accent);font-size:14px;font-family:var(--sans)"},s,"ΔX (run)");
+  el("text",{x:ex+14,y:(by+ey)/2+4,style:"font-weight:700;fill:var(--accent);font-size:14px;font-family:var(--sans)"},s,"ΔY (rise)");
+  el("text",{x:480,y:100,style:"font-weight:700;fill:var(--ink);font-size:16px;font-family:var(--sans)"},s,"Slope = ΔY/ΔX");
+  el("circle",{cx:100,cy:230,r:6,fill:"var(--gold)"},s);
+  el("text",{x:105,y:248,style:"font-size:12px;fill:var(--gold);font-weight:700;font-family:var(--sans)"},s,"Y intercept");
+})();
+
+/* ═══ SVG: SES example ═══ */
+(function(){
+  var s=$('#sesSvg'); if(!s) return;
+  el("line",{x1:80,y1:270,x2:600,y2:270,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:80,y1:270,x2:80,y2:30,stroke:"var(--ink)","stroke-width":2},s);
+  el("text",{x:340,y:310,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:14px;font-family:var(--sans)"},s,"Parental Socioeconomic Status (X)");
+  el("text",{x:25,y:150,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:14px;font-family:var(--sans)",transform:"rotate(-90,25,150)"},s,"Student Test Scores (Y)");
+  el("line",{x1:100,y1:240,x2:560,y2:80,stroke:"var(--ink)","stroke-width":3},s);
+  var bx=240,by=192,ex=380,ey=192-(380-240)*(160/460);
+  el("line",{x1:bx,y1:by,x2:ex,y2:by,stroke:"var(--accent)","stroke-width":2,"stroke-dasharray":"6 4"},s);
+  el("line",{x1:ex,y1:by,x2:ex,y2:ey,stroke:"var(--accent)","stroke-width":2,"stroke-dasharray":"6 4"},s);
+  el("circle",{cx:bx,cy:by,r:5,fill:"var(--accent)"},s);
+  el("circle",{cx:ex,cy:ey,r:5,fill:"var(--accent)"},s);
+  el("text",{x:(bx+ex)/2,y:by+20,"text-anchor":"middle",style:"font-weight:700;fill:var(--accent);font-family:var(--sans)"},s,"ΔX");
+  el("text",{x:ex+14,y:(by+ey)/2+4,style:"font-weight:700;fill:var(--accent);font-family:var(--sans)"},s,"ΔY");
+  el("text",{x:440,y:100,style:"font-weight:700;fill:var(--ink);font-size:15px;font-family:var(--sans)"},s,"Slope = 5 points");
+})();
+
+/* ═══ SVG: Compare two students ═══ */
+(function(){
+  var s=$('#compareSvg'); if(!s) return;
+  el("line",{x1:80,y1:240,x2:600,y2:240,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:80,y1:240,x2:80,y2:20,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:100,y1:220,x2:560,y2:60,stroke:"var(--ink)","stroke-width":3},s);
+  var labels=["$5k","$10k","$15k","$20k","$25k"];
+  labels.forEach(function(l,i){var x=140+i*100;
+    el("line",{x1:x,y1:240,x2:x,y2:245,stroke:"var(--ink)","stroke-width":1},s);
+    el("text",{x:x,y:262,"text-anchor":"middle",style:"font-size:12px;font-family:var(--sans);fill:var(--ink-faint)"},s,l);
+  });
+  el("text",{x:340,y:278,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:13px;font-family:var(--sans)"},s,"Parental SES");
+  var yA=220-(240-100)*(160/460), yB=220-(340-100)*(160/460);
+  el("circle",{cx:240,cy:yA,r:8,fill:"var(--no)"},s);
+  el("circle",{cx:340,cy:yB,r:8,fill:"var(--ok)"},s);
+  el("text",{x:240,y:yA-16,"text-anchor":"middle",style:"font-weight:700;fill:var(--no);font-size:12px;font-family:var(--sans)"},s,"Student A ($10k)");
+  el("text",{x:340,y:yB-16,"text-anchor":"middle",style:"font-weight:700;fill:var(--ok);font-size:12px;font-family:var(--sans)"},s,"Student B ($15k)");
+  el("line",{x1:240,y1:yA,x2:240,y2:240,stroke:"var(--no)","stroke-width":1,"stroke-dasharray":"4 3"},s);
+  el("line",{x1:340,y1:yB,x2:340,y2:240,stroke:"var(--ok)","stroke-width":1,"stroke-dasharray":"4 3"},s);
+  el("line",{x1:240,y1:yA+28,x2:340,y2:yA+28,stroke:"var(--accent)","stroke-width":2},s);
+  el("text",{x:290,y:yA+46,"text-anchor":"middle",style:"font-weight:700;fill:var(--accent);font-size:13px;font-family:var(--sans)"},s,"$5,000 diff → 5 pts diff");
+})();
+
+/* ═══ SVG: Intercept ═══ */
+(function(){
+  var s=$('#interceptSvg'); if(!s) return;
+  el("line",{x1:80,y1:270,x2:600,y2:270,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:80,y1:270,x2:80,y2:20,stroke:"var(--ink)","stroke-width":2},s);
+  el("line",{x1:80,y1:230,x2:560,y2:60,stroke:"var(--ink)","stroke-width":3},s);
+  el("text",{x:340,y:310,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:14px;font-family:var(--sans)"},s,"Parental SES");
+  [5,10,15,20,25,30].forEach(function(v,i){var y=270-i*40;
+    el("line",{x1:75,y1:y,x2:80,y2:y,stroke:"var(--ink)","stroke-width":1},s);
+    el("text",{x:70,y:y+4,"text-anchor":"end",style:"font-size:11px;font-family:var(--sans);fill:var(--ink-faint)"},s,String(v));
+  });
+  el("text",{x:25,y:150,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink);font-size:13px;font-family:var(--sans)",transform:"rotate(-90,25,150)"},s,"Test Scores (points)");
+  el("circle",{cx:80,cy:230,r:10,fill:"var(--gold)"},s);
+  el("line",{x1:80,y1:230,x2:180,y2:220,stroke:"var(--gold)","stroke-width":1.5,"stroke-dasharray":"4 3"},s);
+  el("text",{x:190,y:215,style:"font-weight:700;fill:var(--gold);font-size:14px;font-family:var(--sans)"},s,"Intercept = 10 points");
+  el("text",{x:190,y:235,style:"fill:var(--gold);font-size:12px;font-family:var(--sans)"},s,"(when parental SES = 0)");
+})();
+
+/* ═══ SVG: Regression to the mean ═══ */
+(function(){
+  var s=$('#regMeanSvg'); if(!s) return;
+  var defs=el("defs",{},s);
+  var m=el("marker",{id:"arrowhead",markerWidth:8,markerHeight:6,refX:8,refY:3,orient:"auto"},defs);
+  el("path",{d:"M0,0 L8,3 L0,6 Z",fill:"var(--ink)"},m);
+  el("line",{x1:40,y1:100,x2:600,y2:100,stroke:"var(--line)","stroke-width":2,"stroke-dasharray":"8 4"},s);
+  el("text",{x:320,y:94,"text-anchor":"middle",style:"font-weight:700;fill:var(--ink-faint);font-size:12px;font-family:var(--sans)"},s,"Average");
+  var items=[
+    {x:120,y1:40,y2:75,label:"Rookie of the Year",clr:"var(--ok)"},
+    {x:320,y1:160,y2:125,label:"Bottom School",clr:"var(--no)"},
+    {x:520,y1:35,y2:72,label:"Top Performer",clr:"var(--ok)"}
+  ];
+  items.forEach(function(d){
+    el("circle",{cx:d.x,cy:d.y1,r:6,fill:d.clr},s);
+    el("line",{x1:d.x,y1:d.y1+(d.y1<100?10:-10),x2:d.x,y2:d.y2,stroke:d.clr,"stroke-width":2.5,"marker-end":"url(#arrowhead)"},s);
+    el("text",{x:d.x,y:d.y1<100?d.y1-14:d.y1+20,"text-anchor":"middle",style:"font-size:12px;font-weight:700;fill:"+d.clr+";font-family:var(--sans)"},s,d.label);
+  });
+})();
+
+/* ═══ Interactive Residuals Explorer ═══ */
+(function(){
+  var canvas=$('#residCanvas'); if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var accent='#9c4221', miss='#9b2c2c', ok='#1f6b3f', ink='#15202b', muted='#7b8ba3', line='#e2e0da';
+  /* fixed regression line: y = 90 - 0.7x (in data space 0-100) */
+  var slope=-0.7, intcpt=90;
+  function predY(x){return intcpt+slope*x;}
+  /* initial points near the line */
+  var origPts=[
+    {x:8,y:85},{x:14,y:82},{x:22,y:72},{x:28,y:78},{x:35,y:62},
+    {x:40,y:68},{x:48,y:55},{x:55,y:58},{x:60,y:50},{x:67,y:42},
+    {x:72,y:48},{x:78,y:38},{x:83,y:36},{x:88,y:30},{x:93,y:28}
+  ];
+  var pts=origPts.map(function(p){return{x:p.x,y:p.y}});
+  var dragIdx=-1;
+
+  function resize(){
+    var rect=canvas.getBoundingClientRect();
+    var dpr=window.devicePixelRatio||1;
+    canvas.width=rect.width*dpr;
+    canvas.height=rect.height*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+
+  var PAD_L=50,PAD_R=20,PAD_T=15,PAD_B=40;
+  function toX(v){var rect=canvas.getBoundingClientRect();return PAD_L+v/100*(rect.width-PAD_L-PAD_R);}
+  function toY(v){var rect=canvas.getBoundingClientRect();return PAD_T+(100-v)/100*(rect.height-PAD_T-PAD_B);}
+  function fromX(cx){var rect=canvas.getBoundingClientRect();return(cx-PAD_L)/(rect.width-PAD_L-PAD_R)*100;}
+  function fromY(cy){var rect=canvas.getBoundingClientRect();return 100-(cy-PAD_T)/(rect.height-PAD_T-PAD_B)*100;}
+
+  function draw(){
+    var w=canvas.getBoundingClientRect().width, h=canvas.getBoundingClientRect().height;
+    ctx.clearRect(0,0,w,h);
+    /* grid */
+    ctx.strokeStyle=line; ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){var x=toX(i*25);ctx.beginPath();ctx.moveTo(x,PAD_T);ctx.lineTo(x,h-PAD_B);ctx.stroke();}
+    for(var i=0;i<=4;i++){var y=toY(i*25);ctx.beginPath();ctx.moveTo(PAD_L,y);ctx.lineTo(w-PAD_R,y);ctx.stroke();}
+    /* axes */
+    ctx.strokeStyle=ink; ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(PAD_L,PAD_T);ctx.lineTo(PAD_L,h-PAD_B);ctx.lineTo(w-PAD_R,h-PAD_B);ctx.stroke();
+    /* labels */
+    ctx.fillStyle=muted; ctx.font='11px -apple-system,sans-serif'; ctx.textAlign='center';
+    for(var i=0;i<=4;i++){ctx.fillText(i*25,toX(i*25),h-PAD_B+16);}
+    ctx.textAlign='right';
+    for(var i=0;i<=4;i++){ctx.fillText(i*25,PAD_L-6,toY(i*25)+4);}
+    ctx.textAlign='center';
+    ctx.font='bold 13px -apple-system,sans-serif'; ctx.fillStyle=ink;
+    ctx.fillText('Independent Variable (X)',w/2,h-4);
+    ctx.save();ctx.translate(14,h/2);ctx.rotate(-Math.PI/2);ctx.fillText('Dependent Variable (Y)',0,0);ctx.restore();
+    /* regression line */
+    ctx.strokeStyle=accent; ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(toX(0),toY(predY(0)));ctx.lineTo(toX(100),toY(predY(100)));ctx.stroke();
+    /* label */
+    ctx.fillStyle=accent; ctx.font='bold 12px -apple-system,sans-serif'; ctx.textAlign='left';
+    ctx.fillText('Regression Line',toX(68),toY(predY(68))-12);
+    /* residual lines + points */
+    var totalResid=0;
+    pts.forEach(function(p){
+      var pred=predY(p.x);
+      var resid=Math.abs(p.y-pred);
+      totalResid+=resid;
+      /* color residual by size */
+      var t=Math.min(resid/30,1);
+      var r=Math.round(31+124*t), g=Math.round(107-67*t), b=Math.round(63-19*t);
+      ctx.strokeStyle='rgb('+r+','+g+','+b+')';
+      ctx.lineWidth=2; ctx.setLineDash([5,3]);
+      ctx.beginPath();ctx.moveTo(toX(p.x),toY(p.y));ctx.lineTo(toX(p.x),toY(pred));ctx.stroke();
+      ctx.setLineDash([]);
+    });
+    pts.forEach(function(p,i){
+      ctx.beginPath();ctx.arc(toX(p.x),toY(p.y),7,0,Math.PI*2);
+      ctx.fillStyle=(i===dragIdx)?accent:ink;
+      ctx.fill();
+      ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    });
+    var avgResid=pts.length?totalResid/pts.length:0;
+    var qual=avgResid<8?'Small residuals — strong predictions!':avgResid<18?'Medium residuals — decent predictions':'Large residuals — weak predictions';
+    var qualClr=avgResid<8?ok:avgResid<18?accent:miss;
+    $('#residStat').innerHTML='Avg. residual: <b style="color:'+qualClr+'">'+avgResid.toFixed(1)+'</b> — <span style="color:'+qualClr+'">'+qual+'</span>';
+  }
+
+  function hitTest(cx,cy){
+    for(var i=0;i<pts.length;i++){
+      var dx=toX(pts[i].x)-cx, dy=toY(pts[i].y)-cy;
+      if(dx*dx+dy*dy<225) return i;
+    }
+    return -1;
+  }
+
+  canvas.addEventListener('mousedown',function(e){
+    var rect=canvas.getBoundingClientRect();
+    dragIdx=hitTest(e.clientX-rect.left,e.clientY-rect.top);
+    if(dragIdx>=0) canvas.style.cursor='grabbing';
+  });
+  canvas.addEventListener('mousemove',function(e){
+    var rect=canvas.getBoundingClientRect();
+    if(dragIdx>=0){
+      var ny=fromY(e.clientY-rect.top);
+      pts[dragIdx].y=Math.max(0,Math.min(100,ny));
+      draw();
+    } else {
+      canvas.style.cursor=hitTest(e.clientX-rect.left,e.clientY-rect.top)>=0?'grab':'default';
+    }
+  });
+  canvas.addEventListener('mouseup',function(){dragIdx=-1;canvas.style.cursor='grab';});
+  canvas.addEventListener('mouseleave',function(){dragIdx=-1;canvas.style.cursor='grab';});
+  /* touch */
+  canvas.addEventListener('touchstart',function(e){
+    e.preventDefault();
+    var t=e.changedTouches[0], rect=canvas.getBoundingClientRect();
+    dragIdx=hitTest(t.clientX-rect.left,t.clientY-rect.top);
+  });
+  canvas.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    if(dragIdx<0) return;
+    var t=e.changedTouches[0], rect=canvas.getBoundingClientRect();
+    var ny=fromY(t.clientY-rect.top);
+    pts[dragIdx].y=Math.max(0,Math.min(100,ny));
+    draw();
+  });
+  canvas.addEventListener('touchend',function(){dragIdx=-1;});
+  /* buttons */
+  $('#residScatter').addEventListener('click',function(){
+    pts.forEach(function(p){p.y=Math.max(0,Math.min(100,predY(p.x)+(Math.random()-.5)*70));});
+    draw();
+  });
+  $('#residTight').addEventListener('click',function(){
+    pts.forEach(function(p){p.y=Math.max(0,Math.min(100,predY(p.x)+(Math.random()-.5)*10));});
+    draw();
+  });
+  $('#residReset').addEventListener('click',function(){
+    pts=origPts.map(function(p){return{x:p.x,y:p.y}});
+    draw();
+  });
+  window.addEventListener('resize',resize);
+  resize();
+})();
+
+/* ═══ Interactive R² Simulator ═══ */
+(function(){
+  var canvas=$('#r2canvas'); if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var pts=[], showResid=false;
+
+  function resize(){
+    var rect=canvas.getBoundingClientRect();
+    var dpr=window.devicePixelRatio||1;
+    canvas.width=rect.width*dpr;
+    canvas.height=rect.height*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+  window._r2resize=resize;
+
+  function draw(){
+    var w=canvas.getBoundingClientRect().width, h=canvas.getBoundingClientRect().height;
+    var ink='#15202b', muted='#7b8ba3', line='#e2e0da', accent='#9c4221', miss='#9b2c2c';
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle=line; ctx.lineWidth=1;
+    for(var i=0;i<=10;i++){var x=50+i*(w-70)/10;ctx.beginPath();ctx.moveTo(x,10);ctx.lineTo(x,h-40);ctx.stroke();}
+    for(var i=0;i<=8;i++){var y=10+i*(h-50)/8;ctx.beginPath();ctx.moveTo(50,y);ctx.lineTo(w-20,y);ctx.stroke();}
+    ctx.strokeStyle=ink; ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(50,10);ctx.lineTo(50,h-40);ctx.lineTo(w-20,h-40);ctx.stroke();
+    ctx.fillStyle=muted; ctx.font='12px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+    ctx.textAlign='center';
+    for(var i=0;i<=10;i++){ctx.fillText(i*10,50+i*(w-70)/10,h-24);}
+    ctx.textAlign='right';
+    for(var i=0;i<=8;i++){ctx.fillText(Math.round(i*12.5),44,h-40-i*(h-50)/8+4);}
+    ctx.textAlign='center';
+    ctx.font='bold 13px -apple-system,sans-serif'; ctx.fillStyle=ink;
+    ctx.fillText('X',w/2,h-6);
+    ctx.save();ctx.translate(14,h/2);ctx.rotate(-Math.PI/2);ctx.fillText('Y',0,0);ctx.restore();
+
+    if(pts.length<2){
+      ctx.fillStyle=muted; ctx.font='15px -apple-system,sans-serif'; ctx.textAlign='center';
+      ctx.fillText(pts.length===0?'Click to add data points':'Add one more point…',w/2,(h-30)/2);
+      pts.forEach(function(p){ctx.beginPath();ctx.arc(toCanX(p.x,w),toCanY(p.y,h),6,0,Math.PI*2);ctx.fillStyle=accent;ctx.fill();});
+      return;
+    }
+    var n=pts.length, sx=0,sy=0;
+    pts.forEach(function(p){sx+=p.x;sy+=p.y;});
+    var mx=sx/n, my=sy/n, ssxy=0, ssxx=0;
+    pts.forEach(function(p){ssxy+=(p.x-mx)*(p.y-my);ssxx+=(p.x-mx)*(p.x-mx);});
+    var b1=ssxx?ssxy/ssxx:0, b0=my-b1*mx;
+    var ssres=0, sstot=0;
+    pts.forEach(function(p){ssres+=(p.y-(b0+b1*p.x))*(p.y-(b0+b1*p.x));sstot+=(p.y-my)*(p.y-my);});
+    var r2=sstot?Math.max(0,1-ssres/sstot):0;
+
+    var rl0=b0+b1*0, rl100=b0+b1*100;
+    ctx.strokeStyle=accent; ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(toCanX(0,w),toCanY(rl0,h));ctx.lineTo(toCanX(100,w),toCanY(rl100,h));ctx.stroke();
+
+    if(showResid){pts.forEach(function(p){
+      var pred=b0+b1*p.x;
+      ctx.strokeStyle=miss; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
+      ctx.beginPath();ctx.moveTo(toCanX(p.x,w),toCanY(p.y,h));ctx.lineTo(toCanX(p.x,w),toCanY(pred,h));ctx.stroke();
+      ctx.setLineDash([]);
+    });}
+    pts.forEach(function(p){ctx.beginPath();ctx.arc(toCanX(p.x,w),toCanY(p.y,h),6,0,Math.PI*2);ctx.fillStyle=accent;ctx.fill();});
+    ctx.fillStyle=ink; ctx.font='bold 16px "Iowan Old Style",Palatino,Georgia,serif'; ctx.textAlign='left';
+    ctx.fillText('R² = '+r2.toFixed(3),60,28);
+
+    $('#r2stat').innerHTML='Points: '+n+' · <b>R² = '+r2.toFixed(3)+'</b> ('+((r2*100).toFixed(1))+'% variance explained)';
+  }
+
+  function toCanX(v,w){return 50+v/100*(w-70);}
+  function toCanY(v,h){return (h-40)-v/100*(h-50);}
+  function fromCanX(cx,w){return Math.max(0,Math.min(100,(cx-50)/(w-70)*100));}
+  function fromCanY(cy,h){return Math.max(0,Math.min(100,((h-40)-cy)/(h-50)*100));}
+
+  canvas.addEventListener('click',function(e){
+    var rect=canvas.getBoundingClientRect();
+    var cx=e.clientX-rect.left, cy=e.clientY-rect.top;
+    var x=fromCanX(cx,rect.width), y=fromCanY(cy,rect.height);
+    if(x>=0&&x<=100&&y>=0&&y<=100){pts.push({x:x,y:y});$('#r2toggle').disabled=pts.length<2;draw();}
+  });
+  canvas.addEventListener('touchend',function(e){
+    e.preventDefault();
+    var t=e.changedTouches[0], rect=canvas.getBoundingClientRect();
+    var cx=t.clientX-rect.left, cy=t.clientY-rect.top;
+    var x=fromCanX(cx,rect.width), y=fromCanY(cy,rect.height);
+    if(x>=0&&x<=100&&y>=0&&y<=100){pts.push({x:x,y:y});$('#r2toggle').disabled=pts.length<2;draw();}
+  });
+  $('#r2reset').addEventListener('click',function(){pts=[];showResid=false;$('#r2toggle').textContent='Show residual lines';$('#r2toggle').disabled=true;draw();});
+  $('#r2toggle').addEventListener('click',function(){showResid=!showResid;$('#r2toggle').textContent=showResid?'Hide residual lines':'Show residual lines';draw();});
+  window.addEventListener('resize',resize);
+  resize();
+})();
+
+/* ═══ Quizzes ═══ */
+['q1','q2'].forEach(function(id){
+  var wrap=$('#'+id+'opts'); if(!wrap) return;
+  var fb=$('#'+id+'fb');
+  $$('button',wrap).forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('button',wrap).forEach(function(x){x.classList.remove('right','wrong');x.disabled=true;});
+      var ok=b.dataset.ok==='1';
+      b.classList.add(ok?'right':'wrong');
+      fb.className='fb show '+(ok?'y':'n');
+      fb.innerHTML=(ok?'<strong>Correct!</strong> ':'<strong>Not quite.</strong> ')+b.dataset.why;
+    });
+  });
+});
+
+/* ═══ Interactive R output explorer ═══ */
+(function(){
+  var interps={
+    slope:{
+      title:'Slope (β₁)',
+      val:'985.3',
+      text:'For every <strong>one-year increase</strong> in years since PhD, professor salary is expected to increase by <strong>$985</strong>.',
+      note:'The slope is always in the second row of the Coefficients table, under "Estimate."'
+    },
+    intercept:{
+      title:'Intercept (β₀)',
+      val:'91,718.7',
+      text:'When a professor has <strong>zero years</strong> since their PhD, their predicted salary is <strong>$91,719</strong>.',
+      note:'The intercept is in the first row of the Coefficients table, under "Estimate." You usually don\'t interpret this in your write-up.'
+    },
+    r2:{
+      title:'R² (Effect Size)',
+      val:'.1758',
+      text:'Years since PhD accounts for <strong>17.6%</strong> of the variance in professor salary. That\'s a <strong>medium effect</strong> (.09–.25).',
+      note:'Look for "Multiple R-squared" near the bottom of the output.'
+    },
+    fstat:{
+      title:'F-statistic',
+      val:'84.23',
+      text:'The F-statistic tests whether the overall model is significant. Here, <strong>F</strong>(1, 395) = 84.23 — the model is significant.',
+      note:'You\'ll report this as F(df₁, df₂) = value in your APA write-up.'
+    },
+    pval:{
+      title:'p-value',
+      val:'< .001',
+      text:'The p-value is extremely small (essentially zero). This means the result is <strong>statistically significant</strong> — the relationship is very unlikely to be due to chance.',
+      note:'In APA format, report this as p < .001. Any p-value smaller than .001 gets reported as "< .001."'
+    },
+    stars:{
+      title:'Significance Stars (***)',
+      val:'***',
+      text:'Three stars mean <strong>p < .001</strong> — very strong significance. Two stars (**) = p < .01. One star (*) = p < .05. A dot (.) = p < .10 (marginal).',
+      note:'The legend at the bottom of the Coefficients section tells you what each symbol means.'
+    },
+    df:{
+      title:'Degrees of Freedom',
+      val:'1 and 395',
+      text:'The first number (1) is the number of predictors. The second (395) is n − number of predictors − 1, so <strong>397 − 1 − 1 = 395</strong>.',
+      note:'You report these inside the parentheses: F(1, 395). The total sample size is 395 + 1 + 1 = 397.'
+    }
+  };
+  var card=$('#interpCard'), btns=$('#hlBtns'), rout=$('#rout');
+  if(!card||!btns||!rout) return;
+  var cur=null;
+  $$('button',btns).forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.target;
+      /* toggle off if clicking same button */
+      if(cur===t){
+        cur=null;
+        $$('[data-hl]',rout).forEach(function(s){s.classList.remove('lit')});
+        $$('button',btns).forEach(function(x){x.classList.remove('on')});
+        card.className='interp-card'; card.innerHTML='';
+        return;
+      }
+      cur=t;
+      /* highlight matching spans */
+      $$('[data-hl]',rout).forEach(function(s){s.classList.toggle('lit',s.dataset.hl===t)});
+      /* toggle button state */
+      $$('button',btns).forEach(function(x){x.classList.toggle('on',x.dataset.target===t)});
+      /* show interpretation */
+      var d=interps[t]; if(!d) return;
+      card.innerHTML='<h4>'+d.title+'</h4><span class="val">'+d.val+'</span><p>'+d.text+'</p><p style="margin-top:8px;font-size:13.5px;color:var(--ink-faint)">📍 '+d.note+'</p>';
+      card.className='interp-card show';
+    });
+  });
+  /* also allow clicking directly on the R output spans */
+  $$('[data-hl]',rout).forEach(function(s){
+    s.addEventListener('click',function(){
+      var t=s.dataset.hl;
+      var btn=btns.querySelector('[data-target="'+t+'"]');
+      if(btn) btn.click();
+    });
+  });
+})();
+
+/* ═══ APA Practice reveal ═══ */
+$('#apaReveal').addEventListener('click',function(){$('#apaAnswer').style.display='block';});
+
+})();
+</script>
+</body></html>
